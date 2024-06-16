@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Image from "next/image";
 import MainButton from "./Button";
 
@@ -35,7 +35,6 @@ export function Hero() {
         }}
       >
         <MainButton title="Divulgar animal" />
-        <MainButton title="Adotar um animal" />
       </Box>
     </Box>
   );

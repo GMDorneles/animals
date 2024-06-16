@@ -1,3 +1,4 @@
+"use client";
 import AnimalCard from "@/components/AnimalCard";
 import { Box, Container, Typography } from "@mui/material";
 

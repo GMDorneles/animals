@@ -1,5 +1,6 @@
 import { Hero } from "@/components/Hero";
 import { Container } from "@mui/material";
+import AnimalsList from "../components/AnimalList";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       }}
     >
       <Hero />
+      <AnimalsList />
     </Container>
   );
 }

@@ -1,3 +1,5 @@
+import { Animal } from "@/types/animal/animal";
+
 import {
   Backdrop,
   Box,
@@ -11,12 +13,10 @@ import {
   Snackbar,
   Typography,
 } from "@mui/material";
-import { Animal } from "@/types/animal/animal";
-import { useRouter } from "next/router";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import AnimalCard from "./AnimalCard";
-import { useEffect, useState } from "react";
-import Link from "next/link";
 
 interface AnimalFormProps {
   id: string | null;
@@ -37,8 +37,6 @@ export default function AnimalForm(props?: AnimalFormProps | null) {
     formState: { errors, isSubmitting },
   } = useForm<Animal>();
 
-  // const species = watch("species", props?.species || "dog");
-  // const name = watch("name", props?.name || " ");
   console.log(props);
   const onSubmit: SubmitHandler<Animal> = async (data: Animal) => {
     try {
@@ -84,133 +82,149 @@ export default function AnimalForm(props?: AnimalFormProps | null) {
 
   return (
     <Box
-      p={5}
+      p={4}
       sx={{
         display: "flex",
-        flexDirection: { xs: "column", md: "row" },
+        flexDirection: "column",
         alignItems: "center",
         backgroundColor: "white",
-        width: { xs: "100vw", md: "35vw" },
-        borderRadius: "25px",
       }}
     >
-      <Backdrop
-        open={isSubmitting}
-        sx={{
-          zIndex: 1,
-          color: "#fff",
-          backgroundColor: "rgba(0, 0, 0, 0.4)",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-
       <Box
+        p={4}
         sx={{
-          gap: 4,
           display: "flex",
-          justifyContent: "center",
           flexDirection: { xs: "column", md: "row" },
-          width: "100%",
+          alignItems: "center",
+          backgroundColor: "white",
         }}
       >
-        <Box
+        <Backdrop
+          open={isSubmitting}
           sx={{
-            width: { xs: "100%", md: "50%" },
+            zIndex: 1,
+            color: "#fff",
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
             display: "flex",
-            justifyContent: "center",
             alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <AnimalCard
-            name={watch("name", props?.name || "")}
-            species={watch("species", props?.species || "dog")}
-          />
-        </Box>
-        <Box>
-          <Typography variant="h5" fontWeight="bold" sx={{ color: "#FF8500" }}>
-            {props?.id ? "EDITAR ANIMAL" : "CADASTRAR"}
-          </Typography>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+
+        <Box
+          sx={{
+            gap: 4,
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: { xs: "column", md: "row" },
+            width: "100%",
+          }}
+        >
           <Box
-            component="form"
-            onSubmit={handleSubmit(onSubmit)}
             sx={{
+              width: { xs: "100%", md: "50%" },
               display: "flex",
-              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
+            <AnimalCard
+              name={watch("name", props?.name || "")}
+              species={watch("species", props?.species || "dog")}
+            />
+          </Box>
+          <Box>
+            <Typography
+              variant="h5"
+              fontWeight="bold"
+              sx={{ color: "#FF8500" }}
+            >
+              {props?.id ? "EDITAR ANIMAL" : "CADASTRAR"}
+            </Typography>
             <Box
+              component="form"
+              onSubmit={handleSubmit(onSubmit)}
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                height: { xs: "30vh", sm: "100%", md: "100%" },
               }}
             >
-              <FormControl fullWidth margin="normal">
-                <InputLabel id="species-label">Espécie do animal</InputLabel>
-                <Select
-                  {...register("species", { required: true })}
-                  label="espécie do animal"
-                  labelId="species-label"
-                  id="species-select"
-                  //corrigir
-                  defaultValue={props?.species || "dog"}
-                >
-                  <MenuItem value="cat">Gato</MenuItem>
-                  <MenuItem value="dog">Cachorro</MenuItem>
-                </Select>
-              </FormControl>
-              {errors.species && <span>Campo Obrigatório</span>}
-              <FormControl fullWidth margin="normal">
-                <InputLabel htmlFor="name">Nome</InputLabel>
-                <Input
-                  {...register("name", { required: true })}
-                  id="name"
-                  aria-describedby="Nome"
-                />
-                {errors.name && <span>Campo Obrigatório</span>}
-              </FormControl>
-            </Box>
-            <Box
-              mt={4}
-              sx={{ gap: 2, display: "flex", justifyContent: "space-between" }}
-            >
-              <Link href="/">
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  height: { xs: "30vh", sm: "100%", md: "100%" },
+                }}
+              >
+                <FormControl fullWidth margin="normal">
+                  <InputLabel id="species-label">Espécie do animal</InputLabel>
+                  <Select
+                    {...register("species", { required: true })}
+                    label="espécie do animal"
+                    labelId="species-label"
+                    id="species-select"
+                    //corrigir
+                    defaultValue={props?.species || "dog"}
+                  >
+                    <MenuItem value="cat">Gato</MenuItem>
+                    <MenuItem value="dog">Cachorro</MenuItem>
+                  </Select>
+                </FormControl>
+                {errors.species && <span>Campo Obrigatório</span>}
+                <FormControl fullWidth margin="normal">
+                  <InputLabel htmlFor="name">Nome</InputLabel>
+                  <Input
+                    {...register("name", { required: true })}
+                    id="name"
+                    aria-describedby="Nome"
+                  />
+                  {errors.name && <span>Campo Obrigatório</span>}
+                </FormControl>
+              </Box>
+              <Box
+                mt={4}
+                sx={{
+                  gap: 2,
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Link href="/">
+                  <Button
+                    aria-label="Cancelar"
+                    variant="contained"
+                    sx={{
+                      padding: "12px 24px",
+                      backgroundColor: "#9c9c9c",
+                      "&:hover": {
+                        backgroundColor: "#9c9c9c",
+                      },
+                    }}
+                  >
+                    Cancelar
+                  </Button>
+                </Link>
                 <Button
-                  aria-label="Cancelar"
+                  type="submit"
+                  aria-label="Salvar"
                   variant="contained"
                   sx={{
                     padding: "12px 24px",
-                    backgroundColor: "#9c9c9c",
+                    backgroundColor: "#FF8500",
                     "&:hover": {
-                      backgroundColor: "#9c9c9c",
+                      backgroundColor: "#db790f",
                     },
                   }}
                 >
-                  Cancelar
+                  Salvar
                 </Button>
-              </Link>
-              <Button
-                type="submit"
-                aria-label="Salvar"
-                variant="contained"
-                sx={{
-                  padding: "12px 24px",
-                  backgroundColor: "#FF8500",
-                  "&:hover": {
-                    backgroundColor: "#db790f",
-                  },
-                }}
-              >
-                Salvar
-              </Button>
+              </Box>
             </Box>
           </Box>
         </Box>

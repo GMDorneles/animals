@@ -1,7 +1,11 @@
 "use client";
 import AnimalForm from "@/components/form";
 import { Animal } from "@/types/animal/animal";
-import { Box, CircularProgress, Container } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Container
+} from "@mui/material";
 import { useEffect, useState } from "react";
 
 export default function AnimalData() {
@@ -73,10 +77,17 @@ export default function AnimalData() {
         backgroundColor: "#d8d7d7",
         zIndex: -1,
         minHeight: "100vh",
-        paddingX: { xs: 2, md: 10 },
+        paddingX: { xs: 2, md: 2 },
       }}
     >
-      <Box px={5}>
+      <Box
+        px={8}
+        sx={{
+          width: { xs: "100vw", md: "40vw" },
+          borderRadius: "25px",
+          backgroundColor: "white",
+        }}
+      >
         <AnimalForm
           id={animal?.id || null}
           name={animal?.name || null}

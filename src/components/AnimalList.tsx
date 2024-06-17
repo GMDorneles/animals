@@ -16,7 +16,7 @@ import AnimalCard from "./AnimalCard";
 
 function AnimalsList() {
   const [animals, setAnimals] = useState<Animal[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>(" ");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleSearch = async () => {
     console.log(searchTerm);
@@ -26,7 +26,7 @@ function AnimalsList() {
     }
     try {
       const response = await fetch(
-        `/api/animals/search?name=${encodeURIComponent(searchTerm)}`
+        `/api/animals/search/?name=${encodeURIComponent(searchTerm)}`
       );
       if (!response.ok) {
         throw new Error("Erro ao buscar animais");

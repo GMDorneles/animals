@@ -1,4 +1,5 @@
 import { Animal } from "@/types/animal/animal";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
   Button,
@@ -14,6 +15,24 @@ export default function AnimalCard(props: Animal) {
   const getImageSrc = (species: string) => {
     return species === "dog" ? "/img/dog.webp" : "/img/cat.webp";
   };
+  async function deleteAnimal() {
+    if (!props?.id) {
+      throw new Error("Idnão  fornecido");
+    }
+    try {
+      const response = await fetch(`/api/animals/delete/${props?.id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao deletar animal");
+      }
+
+      console.log("Animal deletado com sucesso");
+    } catch (error) {
+      console.error("Erro ao deletar animal:", error);
+    }
+  }
   async function adopt() {
     try {
       const response = await fetch(`/api/animals/update/${props.id}`, {
@@ -36,6 +55,7 @@ export default function AnimalCard(props: Animal) {
         image={getImageSrc(props?.species)}
         alt="espécie"
       />
+
       <CardContent
         sx={{
           height: "80px",
@@ -44,9 +64,33 @@ export default function AnimalCard(props: Animal) {
       >
         {props?.name && (
           <Box>
-            <Typography gutterBottom variant="h5" component="div">
-              {props.name + ","}
-            </Typography>
+            <Box sx={{ display: "flex" }}>
+              <Box
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography gutterBottom variant="h5" component="div">
+                  {props.name + ","}
+                </Typography>
+                {props?.id && (
+                  <Button
+                    startIcon={<DeleteIcon />}
+                    sx={{
+                      color: "red",
+                      borderColor: "red",
+                      "&:hover": {
+                        color: "#FF8500",
+                      },
+                    }}
+                    onClick={() => deleteAnimal()}
+                  />
+                )}
+              </Box>
+            </Box>
+
             <Typography variant="body2" color="text.secondary">
               Está a procura de um novo lar.
             </Typography>

@@ -15,10 +15,9 @@ export default function AnimalCard(props: Animal) {
   };
 
   return (
-    <Card >
+    <Card>
       <CardMedia
         component="img"
-        // height={"140"}
         image={getImageSrc(props?.species)}
         alt="espécie"
       />

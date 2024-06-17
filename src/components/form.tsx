@@ -1,4 +1,3 @@
-"use client";
 import { Animal } from "@/types/animal/animal";
 import {
   Backdrop,
@@ -30,7 +29,6 @@ export default function AnimalForm() {
   const name = watch("name", "");
 
   const onSubmit: SubmitHandler<Animal> = async (data: Animal) => {
-    console.log(data);
     try {
       const response = await fetch("/api/animals/create", {
         method: "POST",
@@ -52,12 +50,13 @@ export default function AnimalForm() {
   const handleCloseSnackbar = () => {
     setShowSnackbar(false);
   };
+
   return (
     <Box
       p={5}
       sx={{
         display: "flex",
-        flexDirection: "row",
+        flexDirection: { xs: "column", md: "row" },
         backgroundColor: "white",
         width: { xs: "100vw", md: "35vw" },
         borderRadius: "25px",
@@ -83,7 +82,7 @@ export default function AnimalForm() {
 
       <Box
         sx={{
-          gap: 2,
+          gap: 4,
           display: "flex",
           justifyContent: "center",
           flexDirection: { xs: "column", md: "row" },
@@ -93,11 +92,7 @@ export default function AnimalForm() {
           <AnimalCard name={name} species={species} />
         </Box>
         <Box>
-          <Typography
-            variant="h4"
-            fontWeight={"bold"}
-            sx={{ color: "#FF8500" }}
-          >
+          <Typography variant="h4" fontWeight="bold" sx={{ color: "#FF8500" }}>
             CADASTRO
           </Typography>
           ,{" "}
@@ -140,7 +135,10 @@ export default function AnimalForm() {
                 {errors.name && <span>Campo Obrigatório</span>}
               </FormControl>
             </Box>
-            <Box sx={{ gap: 2, display: "flex" }}>
+            <Box
+              mt={4}
+              sx={{ gap: 2, display: "flex", justifyContent: "space-between" }}
+            >
               <Button
                 aria-label="Cancelar"
                 variant="contained"

@@ -10,14 +10,20 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function AnimalCard(props: Animal) {
+  const [showSuccess, setShowSuccess] = useState(false);
+
   const getImageSrc = (species: string) => {
     return species === "dog" ? "/img/dog.webp" : "/img/cat.webp";
   };
+  const handleCloseModal = () => {
+    setShowSuccess(false);
+  };
   async function deleteAnimal() {
     if (!props?.id) {
-      throw new Error("Idnão  fornecido");
+      throw new Error("Id não  fornecido");
     }
     try {
       const response = await fetch(`/api/animals/delete/${props?.id}`, {
@@ -29,6 +35,10 @@ export default function AnimalCard(props: Animal) {
       }
 
       console.log("Animal deletado com sucesso");
+      console.log("Animal deletado com sucesso");
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     } catch (error) {
       console.error("Erro ao deletar animal:", error);
     }

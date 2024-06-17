@@ -51,7 +51,7 @@ export default function AnimalData() {
           alignItems: "center",
           justifyContent: "center",
           padding: 0,
-          backgroundColor: "#F1F1F1",
+          backgroundColor: "#d6cdcd",
           zIndex: -1,
           minHeight: "100vh",
         }}
@@ -70,13 +70,13 @@ export default function AnimalData() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: 0,
-        backgroundColor: "#F1F1F1",
+        backgroundColor: "#d8d7d7",
         zIndex: -1,
         minHeight: "100vh",
+        paddingX: { xs: 2, md: 10 },
       }}
     >
-      <Box>
+      <Box px={5}>
         <AnimalForm
           id={animal?.id || null}
           name={animal?.name || null}

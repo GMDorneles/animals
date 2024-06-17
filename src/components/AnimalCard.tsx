@@ -30,7 +30,7 @@ export default function AnimalCard(props: Animal) {
   }
 
   return (
-    <Card>
+    <Card sx={{ boxShadow: 5, width: "100%", position: "relative" }}>
       <CardMedia
         component="img"
         image={getImageSrc(props?.species)}
@@ -55,18 +55,20 @@ export default function AnimalCard(props: Animal) {
       </CardContent>
       <CardActions>
         <Box>
-          <Link
-            href={`/animal?id=${props?.id}&name=${props?.name}&species=${props?.species}`}
-            passHref
-          >
-            <Button size="small" color="primary">
-              Editar
-            </Button>
-          </Link>
           {props?.available && (
-            <Button size="small" color="primary" onClick={() => adopt()}>
-              Adotar
-            </Button>
+            <Box>
+              <Link
+                href={`/animal?id=${props?.id}&name=${props?.name}&species=${props?.species}`}
+                passHref
+              >
+                <Button size="small" color="primary">
+                  Editar
+                </Button>
+                <Button size="small" color="primary" onClick={() => adopt()}>
+                  Adotar
+                </Button>
+              </Link>
+            </Box>
           )}
         </Box>
       </CardActions>

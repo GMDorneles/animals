@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Animal } from "@/types/animal/animal";
-
+import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import AnimalCard from "./AnimalCard";
 import { useEffect, useState } from "react";
@@ -27,6 +27,7 @@ interface AnimalFormProps {
 
 export default function AnimalForm(props?: AnimalFormProps | null) {
   console.log(props);
+
   const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
   const {
     register,
@@ -87,6 +88,7 @@ export default function AnimalForm(props?: AnimalFormProps | null) {
       sx={{
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
+        alignItems: "center",
         backgroundColor: "white",
         width: { xs: "100vw", md: "35vw" },
         borderRadius: "25px",
@@ -116,9 +118,17 @@ export default function AnimalForm(props?: AnimalFormProps | null) {
           display: "flex",
           justifyContent: "center",
           flexDirection: { xs: "column", md: "row" },
+          width: "100%",
         }}
       >
-        <Box sx={{ width: { xs: "100vw", md: "50%" } }}>
+        <Box
+          sx={{
+            width: { xs: "100%", md: "50%" },
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <AnimalCard
             name={watch("name", props?.name || "")}
             species={watch("species", props?.species || "dog")}

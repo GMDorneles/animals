@@ -12,7 +12,7 @@ export default function MainButton(props: ButtonProps) {
         aria-label="Quero adotar um animal"
         variant="contained"
         sx={{
-          padding: "12px 24px",
+          padding: { md: "8px 18px", lg: "12px 24px" },
           backgroundColor: "#FF8500",
           "&:hover": {
             backgroundColor: "#db790f",

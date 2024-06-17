@@ -1,6 +1,6 @@
 "use client";
-import AnimalCard from "@/components/AnimalCard";
-import { Box, Container, Typography } from "@mui/material";
+import AnimalForm from "@/components/form";
+import { Box, Container } from "@mui/material";
 
 export default function animal() {
   return (
@@ -8,17 +8,17 @@ export default function animal() {
       disableGutters
       maxWidth={false}
       sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         padding: 0,
-        backgroundColor: "white",
+        backgroundColor: "#F1F1F1",
         zIndex: -1,
         minHeight: "100vh",
       }}
     >
       <Box>
-        <Box>
-          <AnimalCard />
-        </Box>
-        <Box></Box>
+        <AnimalForm />
       </Box>
     </Container>
   );

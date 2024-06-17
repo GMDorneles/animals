@@ -1,5 +1,5 @@
 export interface Animal {
-  id: string;
+  id?: string;
   name?: string;
   available?: boolean;
   species: string;

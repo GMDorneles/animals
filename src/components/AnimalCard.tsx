@@ -1,36 +1,50 @@
+import { Animal } from "@/types/animal/animal";
 import {
+  Box,
   Button,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
   Typography,
 } from "@mui/material";
 
-export default function AnimalCard() {
+export default function AnimalCard(props: Animal) {
+  const getImageSrc = (species: string) => {
+    return species === "dog" ? "/img/dog.webp" : "/img/cat.webp";
+  };
+
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image="/img/cat.webp"
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Está a procura de um novo lar.
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+    <Card >
+      <CardMedia
+        component="img"
+        // height={"140"}
+        image={getImageSrc(props?.species)}
+        alt="espécie"
+      />
+      <CardContent
+        sx={{
+          height: "80px",
+          overflow: "hidden",
+        }}
+      >
+        {props?.name && (
+          <Box>
+            <Typography gutterBottom variant="h5" component="div">
+              {props.name + ","}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Está a procura de um novo lar.
+            </Typography>
+          </Box>
+        )}
+      </CardContent>
       <CardActions>
-        <Button size="small" color="primary">
-          Adotar
-        </Button>
+        {props?.available && (
+          <Button size="small" color="primary">
+            Adotar
+          </Button>
+        )}
       </CardActions>
     </Card>
   );

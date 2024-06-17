@@ -1,16 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { getAnimals } from "../api/index";
+import MainButton from "@/components/MainButton";
 import { Animal } from "@/types/animal/animal";
-import {
-  List,
-  Box,
-  Container,
-  ListItem,
-  ListItemText,
-  Typography,
-} from "@mui/material";
-import MainButton from "@/components/Button";
+import { Box, Container, List, ListItem, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { getAnimals } from "../pages/api";
+import AnimalCard from "./AnimalCard";
 
 function AnimalsList() {
   const [animals, setAnimals] = useState<Animal[]>([]);
@@ -42,13 +36,23 @@ function AnimalsList() {
     >
       <Box>
         {animals.length > 0 ? (
-          <List>
+          <List
+            sx={{
+              display: "flex",
+              overflowX: "auto",
+              marginY: 2,
+              padding: 0,
+            }}
+          >
             {animals.map((animal) => (
-              <ListItem key={animal.id}>
-                <ListItemText
-                  primary={animal.name}
-                  primaryTypographyProps={{ style: { color: "black" } }}
-                />
+              <ListItem
+                key={animal.id}
+                sx={{
+                  marginX: 1,
+                  minWidth: 200,
+                }}
+              >
+                <AnimalCard name={animal.name} species={animal.species} />
               </ListItem>
             ))}
           </List>
@@ -58,7 +62,7 @@ function AnimalsList() {
               Não existem animais disponíveis
             </Typography>
             <Typography>Gostaria de cadastrar um novo animal?</Typography>
-            <MainButton title="cadastrar" />
+            <MainButton title="cadastrar" url="/animal" />
           </Box>
         )}
       </Box>

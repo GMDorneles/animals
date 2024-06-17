@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import Image from "next/image";
-import MainButton from "./Button";
+import MainButton from "./MainButton";
 
 export function Hero() {
   return (
@@ -27,14 +27,10 @@ export function Hero() {
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: "column", md: "row" },
           justifyContent: "center",
-          gap: 2,
-          flexWrap: "wrap",
-          marginTop: 2,
         }}
       >
-        <MainButton title="Divulgar animal" />
+        <MainButton title="Divulgar animal" url="/animal" />
       </Box>
     </Box>
   );

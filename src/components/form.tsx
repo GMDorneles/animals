@@ -22,10 +22,10 @@ interface AnimalFormProps {
   id: string | null;
   name: string | null;
   species: string | null;
+  available: boolean | null;
 }
 
-export default function AnimalForm(props: AnimalFormProps) {
-  const nameteste = props.name || "";
+export default function AnimalForm(props?: AnimalFormProps | null) {
   console.log(props);
   const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
   const {
@@ -36,15 +36,15 @@ export default function AnimalForm(props: AnimalFormProps) {
     formState: { errors, isSubmitting },
   } = useForm<Animal>();
 
-  const species = watch("species", props.species || "dog");
-  const name = watch("name", props.name || "");
-
+  // const species = watch("species", props?.species || "dog");
+  // const name = watch("name", props?.name || " ");
+  console.log(props);
   const onSubmit: SubmitHandler<Animal> = async (data: Animal) => {
     try {
-      const endpoint = props.id
+      const endpoint = props?.id
         ? `/api/animals/update/${props.id}`
         : "/api/animals/create";
-      const method = props.id ? "PUT" : "POST";
+      const method = props?.id ? "PUT" : "POST";
 
       const response = await fetch(endpoint, {
         method: method,
@@ -70,6 +70,16 @@ export default function AnimalForm(props: AnimalFormProps) {
   const handleCloseSnackbar = () => {
     setShowSnackbar(false);
   };
+
+  useEffect(() => {
+    if (props) {
+      reset({
+        name: props.name || "",
+        species: props.species || "dog",
+        available: props.available || false,
+      });
+    }
+  }, [props, reset]);
 
   return (
     <Box
@@ -109,11 +119,14 @@ export default function AnimalForm(props: AnimalFormProps) {
         }}
       >
         <Box sx={{ width: { xs: "100vw", md: "50%" } }}>
-          <AnimalCard name={name} species={species} />
+          <AnimalCard
+            name={watch("name", props?.name || "")}
+            species={watch("species", props?.species || "dog")}
+          />
         </Box>
         <Box>
           <Typography variant="h5" fontWeight="bold" sx={{ color: "#FF8500" }}>
-            {props.id ? "EDITAR ANIMAL" : "CADASTRAR"}
+            {props?.id ? "EDITAR ANIMAL" : "CADASTRAR"}
           </Typography>
           <Box
             component="form"
@@ -137,7 +150,8 @@ export default function AnimalForm(props: AnimalFormProps) {
                   label="espécie do animal"
                   labelId="species-label"
                   id="species-select"
-                  defaultValue={props.species || "dog"}
+                  //corrigir
+                  defaultValue={props?.species || "dog"}
                 >
                   <MenuItem value="cat">Gato</MenuItem>
                   <MenuItem value="dog">Cachorro</MenuItem>
@@ -150,7 +164,6 @@ export default function AnimalForm(props: AnimalFormProps) {
                   {...register("name", { required: true })}
                   id="name"
                   aria-describedby="Nome"
-                  value={nameteste}
                 />
                 {errors.name && <span>Campo Obrigatório</span>}
               </FormControl>

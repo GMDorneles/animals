@@ -16,7 +16,7 @@ export default function AnimalCard(props: Animal) {
   };
   async function adopt() {
     try {
-      const response = await fetch(`/api/animals/${props.id}`, {
+      const response = await fetch(`/api/animals/update/${props.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

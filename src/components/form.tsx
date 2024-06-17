@@ -14,10 +14,10 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import AnimalCard from "./AnimalCard";
-import { useRouter } from "next/router";
 interface AnimalFormProps {
   id: string | null;
   name: string | null;

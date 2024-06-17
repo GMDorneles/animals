@@ -15,7 +15,7 @@ export default async function handler(
       return res.status(400).json({ message: "O id é obrigatório" });
     }
 
-    const response = await fetch(`http://localhost:3001/animals/${id}`, {
+    const response = await fetch(`http://localhost:3001/animal/${id}`, {
       method: "DELETE",
     });
 

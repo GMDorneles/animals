@@ -13,6 +13,20 @@ export default function AnimalCard(props: Animal) {
   const getImageSrc = (species: string) => {
     return species === "dog" ? "/img/dog.webp" : "/img/cat.webp";
   };
+  async function adopt() {
+    try {
+      const response = await fetch(`/api/animals/${props.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ available: false }),
+      });
+      console.log(response);
+    } catch (error) {
+      console.error("Erro ao adotar:", error);
+    }
+  }
 
   return (
     <Card>
@@ -40,7 +54,7 @@ export default function AnimalCard(props: Animal) {
       </CardContent>
       <CardActions>
         {props?.available && (
-          <Button size="small" color="primary">
+          <Button size="small" color="primary" onClick={() => adopt()}>
             Adotar
           </Button>
         )}

@@ -120,6 +120,7 @@ function AnimalsList() {
                 }}
               >
                 <AnimalCard
+                  id={animal?.id}
                   name={animal?.name}
                   species={animal?.species}
                   available={animal.available}

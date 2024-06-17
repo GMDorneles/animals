@@ -8,6 +8,7 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+import Link from "next/link";
 
 export default function AnimalCard(props: Animal) {
   const getImageSrc = (species: string) => {
@@ -53,11 +54,21 @@ export default function AnimalCard(props: Animal) {
         )}
       </CardContent>
       <CardActions>
-        {props?.available && (
-          <Button size="small" color="primary" onClick={() => adopt()}>
-            Adotar
-          </Button>
-        )}
+        <Box>
+          <Link
+            href={`/animal?id=${props?.id}&name=${props?.name}&species=${props?.species}`}
+            passHref
+          >
+            <Button size="small" color="primary">
+              Editar
+            </Button>
+          </Link>
+          {props?.available && (
+            <Button size="small" color="primary" onClick={() => adopt()}>
+              Adotar
+            </Button>
+          )}
+        </Box>
       </CardActions>
     </Card>
   );

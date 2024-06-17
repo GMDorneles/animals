@@ -1,4 +1,3 @@
-import { Animal } from "@/types/animal/animal";
 import {
   Backdrop,
   Box,
@@ -12,26 +11,43 @@ import {
   Snackbar,
   Typography,
 } from "@mui/material";
+import { Animal } from "@/types/animal/animal";
+
 import { SubmitHandler, useForm } from "react-hook-form";
 import AnimalCard from "./AnimalCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
-export default function AnimalForm() {
+interface AnimalFormProps {
+  id: string | null;
+  name: string | null;
+  species: string | null;
+}
+
+export default function AnimalForm(props: AnimalFormProps) {
+  const nameteste = props.name || "";
+  console.log(props);
   const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<Animal>();
 
-  const species = watch("species", "dog");
-  const name = watch("name", "");
+  const species = watch("species", props.species || "dog");
+  const name = watch("name", props.name || "");
 
   const onSubmit: SubmitHandler<Animal> = async (data: Animal) => {
     try {
-      const response = await fetch("/api/animals/create", {
-        method: "POST",
+      const endpoint = props.id
+        ? `/api/animals/update/${props.id}`
+        : "/api/animals/create";
+      const method = props.id ? "PUT" : "POST";
+
+      const response = await fetch(endpoint, {
+        method: method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -40,10 +56,14 @@ export default function AnimalForm() {
           species: data.species,
         }),
       });
-      console.log(response);
+
+      if (!response.ok) {
+        throw new Error("Erro ao cadastrar/alterar animal");
+      }
+
       setShowSnackbar(true);
     } catch (error) {
-      console.error("Erro ao cadastrar:", error);
+      console.error("Erro ao cadastrar/alterar animal:", error);
     }
   };
 
@@ -92,10 +112,9 @@ export default function AnimalForm() {
           <AnimalCard name={name} species={species} />
         </Box>
         <Box>
-          <Typography variant="h4" fontWeight="bold" sx={{ color: "#FF8500" }}>
-            CADASTRO
+          <Typography variant="h5" fontWeight="bold" sx={{ color: "#FF8500" }}>
+            {props.id ? "EDITAR ANIMAL" : "CADASTRAR"}
           </Typography>
-          ,{" "}
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
@@ -118,7 +137,7 @@ export default function AnimalForm() {
                   label="espécie do animal"
                   labelId="species-label"
                   id="species-select"
-                  defaultValue="dog"
+                  defaultValue={props.species || "dog"}
                 >
                   <MenuItem value="cat">Gato</MenuItem>
                   <MenuItem value="dog">Cachorro</MenuItem>
@@ -131,6 +150,7 @@ export default function AnimalForm() {
                   {...register("name", { required: true })}
                   id="name"
                   aria-describedby="Nome"
+                  value={nameteste}
                 />
                 {errors.name && <span>Campo Obrigatório</span>}
               </FormControl>
@@ -139,19 +159,21 @@ export default function AnimalForm() {
               mt={4}
               sx={{ gap: 2, display: "flex", justifyContent: "space-between" }}
             >
-              <Button
-                aria-label="Cancelar"
-                variant="contained"
-                sx={{
-                  padding: "12px 24px",
-                  backgroundColor: "#9c9c9c",
-                  "&:hover": {
+              <Link href="/">
+                <Button
+                  aria-label="Cancelar"
+                  variant="contained"
+                  sx={{
+                    padding: "12px 24px",
                     backgroundColor: "#9c9c9c",
-                  },
-                }}
-              >
-                Cancelar
-              </Button>
+                    "&:hover": {
+                      backgroundColor: "#9c9c9c",
+                    },
+                  }}
+                >
+                  Cancelar
+                </Button>
+              </Link>
               <Button
                 type="submit"
                 aria-label="Salvar"

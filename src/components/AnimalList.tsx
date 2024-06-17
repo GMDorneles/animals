@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import { getAnimals } from "../pages/api/animals";
 import AnimalCard from "./AnimalCard";
+import Link from "next/link";
 
 function AnimalsList() {
   const [animals, setAnimals] = useState<Animal[]>([]);

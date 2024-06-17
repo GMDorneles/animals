@@ -2,8 +2,10 @@
 import MainButton from "@/components/MainButton";
 import { Animal } from "@/types/animal/animal";
 import {
+  Backdrop,
   Box,
   Button,
+  CircularProgress,
   Container,
   List,
   ListItem,
@@ -17,9 +19,9 @@ import AnimalCard from "./AnimalCard";
 function AnimalsList() {
   const [animals, setAnimals] = useState<Animal[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSearch = async () => {
-    console.log(searchTerm);
     if (searchTerm == " " || searchTerm == "") {
       fetchAnimalsData();
       return;
@@ -32,6 +34,7 @@ function AnimalsList() {
         throw new Error("Erro ao buscar animais");
       }
       const data = await response.json();
+      setAnimals(data);
     } catch (error) {
       console.error("Erro ao buscar animais:", error);
       setAnimals([]);
@@ -40,10 +43,11 @@ function AnimalsList() {
   const fetchAnimalsData = async () => {
     try {
       const animalsData = await getAnimals();
-      console.log("Dados dos animais:", animalsData);
       setAnimals(animalsData);
     } catch (error) {
       console.error("Erro ao carregar animais:", error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -64,6 +68,23 @@ function AnimalsList() {
         alignItems: "center",
       }}
     >
+      <Backdrop
+        open={loading}
+        sx={{
+          zIndex: 1,
+          color: "#fff",
+          backgroundColor: "rgba(0, 0, 0, 0.4)",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Box
         mt={6}
         sx={{

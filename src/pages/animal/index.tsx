@@ -1,11 +1,7 @@
 "use client";
 import AnimalForm from "@/components/form";
 import { Animal } from "@/types/animal/animal";
-import {
-  Box,
-  CircularProgress,
-  Container
-} from "@mui/material";
+import { Box, CircularProgress, Container } from "@mui/material";
 import { useEffect, useState } from "react";
 
 export default function AnimalData() {
@@ -17,7 +13,6 @@ export default function AnimalData() {
 
   const fetchAnimalData = async () => {
     try {
-      console.log(id);
       const response = await fetch(`/api/animals/${id}`, {
         method: "GET",
         headers: {

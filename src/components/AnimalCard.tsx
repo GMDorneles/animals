@@ -10,17 +10,12 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import { useState } from "react";
 
 export default function AnimalCard(props: Animal) {
-  const [showSuccess, setShowSuccess] = useState(false);
-
   const getImageSrc = (species: string) => {
     return species === "dog" ? "/img/dog.webp" : "/img/cat.webp";
   };
-  const handleCloseModal = () => {
-    setShowSuccess(false);
-  };
+
   async function deleteAnimal() {
     if (!props?.id) {
       throw new Error("Id não  fornecido");
@@ -35,7 +30,7 @@ export default function AnimalCard(props: Animal) {
       }
       setTimeout(() => {
         window.location.reload();
-      }, 3000);
+      }, 1000);
     } catch (error) {
       console.error("Erro ao deletar animal:", error);
     }
@@ -49,7 +44,6 @@ export default function AnimalCard(props: Animal) {
         },
         body: JSON.stringify({ available: false }),
       });
-      console.log(response);
     } catch (error) {
       console.error("Erro ao adotar:", error);
     }

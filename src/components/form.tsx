@@ -36,7 +36,6 @@ export default function AnimalForm(props?: AnimalFormProps | null) {
     formState: { errors, isSubmitting },
   } = useForm<Animal>();
 
-  console.log(props);
   const onSubmit: SubmitHandler<Animal> = async (data: Animal) => {
     try {
       const endpoint = props?.id
@@ -159,7 +158,7 @@ export default function AnimalForm(props?: AnimalFormProps | null) {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  height: { xs: "30vh", sm: "100%", md: "100%" },
+                  height: { xs: "20vh", sm: "100%", md: "100%" },
                 }}
               >
                 <FormControl fullWidth margin="normal">
@@ -187,7 +186,6 @@ export default function AnimalForm(props?: AnimalFormProps | null) {
                 </FormControl>
               </Box>
               <Box
-                mt={4}
                 sx={{
                   gap: 2,
                   display: "flex",

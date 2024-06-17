@@ -9,7 +9,6 @@ export default function MainButton(props: ButtonProps) {
   return (
     <Link href={props.url}>
       <Button
-        // variant="outlined"
         aria-label="Quero adotar um animal"
         variant="contained"
         sx={{

@@ -33,9 +33,6 @@ export default function AnimalCard(props: Animal) {
       if (!response.ok) {
         throw new Error("Erro ao deletar animal");
       }
-
-      console.log("Animal deletado com sucesso");
-      console.log("Animal deletado com sucesso");
       setTimeout(() => {
         window.location.reload();
       }, 3000);
@@ -74,55 +71,98 @@ export default function AnimalCard(props: Animal) {
       >
         {props?.name && (
           <Box>
-            <Box sx={{ display: "flex" }}>
-              <Box
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Typography gutterBottom variant="h5" component="div">
-                  {props.name + ","}
-                </Typography>
-                {props?.id && (
-                  <Button
-                    startIcon={<DeleteIcon />}
-                    sx={{
-                      color: "red",
-                      borderColor: "red",
-                      "&:hover": {
-                        color: "#FF8500",
-                      },
-                    }}
-                    onClick={() => deleteAnimal()}
-                  />
-                )}
-              </Box>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography gutterBottom variant="h5" component="div">
+                {props.name + ","}
+              </Typography>
             </Box>
-
-            <Typography variant="body2" color="text.secondary">
-              Está a procura de um novo lar.
-            </Typography>
+            {props?.available == true || !props?.id ? (
+              <Typography variant="body2" color="text.secondary">
+                Está a procura de um novo lar.
+              </Typography>
+            ) : (
+              <Typography variant="body2" color="text.secondary">
+                Já encontrou um novo lar.
+              </Typography>
+            )}
           </Box>
         )}
       </CardContent>
       <CardActions>
-        <Box>
-          {props?.available && (
-            <Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "end",
+            alignItems: "center",
+            height: 40,
+            width: "100%",
+          }}
+        >
+          {props?.available ? (
+            <Box sx={{ display: "flex", gap: 2 }}>
+              <Button
+                onClick={() => deleteAnimal()}
+                startIcon={<DeleteIcon />}
+                size="small"
+                sx={{
+                  backgroundColor: "#ca290c",
+                  color: "#fdfdfd",
+                  borderColor: "#FF8500",
+                  "&:hover": {
+                    color: "#ca290c",
+                    borderColor: "#ca290c",
+                    backgroundColor: "white",
+                  },
+                }}
+              >
+                Delete
+              </Button>
               <Link
                 href={`/animal?id=${props?.id}&name=${props?.name}&species=${props?.species}`}
                 passHref
               >
-                <Button size="small" color="primary">
+                <Button
+                  size="small"
+                  sx={{
+                    backgroundColor: "#FF8500",
+                    color: "#fdfdfd",
+                    borderColor: "#FF8500",
+                    "&:hover": {
+                      color: "#FF8500",
+                      borderColor: "#FF8500",
+                      backgroundColor: "white",
+                    },
+                  }}
+                >
                   Editar
                 </Button>
-                <Button size="small" color="primary" onClick={() => adopt()}>
-                  Adotar
-                </Button>
               </Link>
+              <Button
+                size="small"
+                color="primary"
+                onClick={() => adopt()}
+                sx={{
+                  backgroundColor: "#FF8500",
+                  color: "#fdfdfd",
+                  borderColor: "#FF8500",
+                  "&:hover": {
+                    color: "#FF8500",
+                    borderColor: "#FF8500",
+                    backgroundColor: "white",
+                  },
+                }}
+              >
+                Adotar
+              </Button>
             </Box>
+          ) : (
+            <Box sx={{ height: 40 }} />
           )}
         </Box>
       </CardActions>

@@ -32,8 +32,6 @@ function AnimalsList() {
         throw new Error("Erro ao buscar animais");
       }
       const data = await response.json();
-      console.log(data);
-      setAnimals(data);
     } catch (error) {
       console.error("Erro ao buscar animais:", error);
       setAnimals([]);
@@ -67,7 +65,7 @@ function AnimalsList() {
       }}
     >
       <Box
-        mt={8}
+        mt={6}
         sx={{
           width: "80%",
           display: "flex",
@@ -91,6 +89,7 @@ function AnimalsList() {
         </Button>
       </Box>
       <Box
+        mt={6}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -103,11 +102,12 @@ function AnimalsList() {
           <List
             sx={{
               display: "flex",
-              overflowX: "auto",
+              flexDirection: "row",
               flexWrap: "wrap",
-              marginY: 2,
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
               padding: 0,
-              width: "90%",
             }}
           >
             {animals.map((animal) => (
@@ -129,14 +129,14 @@ function AnimalsList() {
             ))}
           </List>
         ) : (
-          <Box>
+          <Box sx={{ textAlign: "center" }}>
             <Typography sx={{ color: "black" }}>
               Não existem animais disponíveis
             </Typography>
-            <Typography sx={{ color: "black" }}>
+            <Typography mb={3} sx={{ color: "black" }}>
               Gostaria de cadastrar um novo animal?
             </Typography>
-            <MainButton title="cadastrar" url="/animal" />
+            <MainButton title="Cadastrar" url="/animal" />
           </Box>
         )}
       </Box>

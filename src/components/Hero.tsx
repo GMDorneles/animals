@@ -11,7 +11,7 @@ export function Hero() {
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
-        height: { xs: "30vh", sm: "40vh", md: "70vh" },
+        height: { xs: "30vh", sm: "40vh", md: "45vh" },
         width: "100%",
         zIndex: 1,
       }}
@@ -22,7 +22,7 @@ export function Hero() {
         layout="fill"
         objectFit="cover"
         quality={100}
-        style={{ zIndex: -1, filter: "blur(5px)" }}
+        style={{ zIndex: -1, filter: "blur(8px)" }}
       />
       <Box
         sx={{

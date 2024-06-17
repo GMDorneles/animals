@@ -17,7 +17,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import AnimalCard from "./AnimalCard";
-
+import { useRouter } from "next/router";
 interface AnimalFormProps {
   id: string | null;
   name: string | null;
@@ -26,9 +26,8 @@ interface AnimalFormProps {
 }
 
 export default function AnimalForm(props?: AnimalFormProps | null) {
-  console.log(props);
-
   const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -61,6 +60,7 @@ export default function AnimalForm(props?: AnimalFormProps | null) {
       }
 
       setShowSnackbar(true);
+      router.push("/");
     } catch (error) {
       console.error("Erro ao cadastrar/alterar animal:", error);
     }
@@ -169,7 +169,6 @@ export default function AnimalForm(props?: AnimalFormProps | null) {
                     label="espécie do animal"
                     labelId="species-label"
                     id="species-select"
-                    //corrigir
                     defaultValue={props?.species || "dog"}
                   >
                     <MenuItem value="cat">Gato</MenuItem>

@@ -35,22 +35,6 @@ export default function AnimalCard(props: Animal) {
       console.error("Erro ao deletar animal:", error);
     }
   }
-  async function adopt() {
-    try {
-      const response = await fetch(`/api/animals/update/${props.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ available: false }),
-      });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    } catch (error) {
-      console.error("Erro ao adotar:", error);
-    }
-  }
 
   return (
     <Card sx={{ boxShadow: 5, width: "100%", position: "relative" }}>
@@ -140,23 +124,6 @@ export default function AnimalCard(props: Animal) {
                   Editar
                 </Button>
               </Link>
-              <Button
-                size="small"
-                color="primary"
-                onClick={() => adopt()}
-                sx={{
-                  backgroundColor: "#FF8500",
-                  color: "#fdfdfd",
-                  borderColor: "#FF8500",
-                  "&:hover": {
-                    color: "#FF8500",
-                    borderColor: "#FF8500",
-                    backgroundColor: "white",
-                  },
-                }}
-              >
-                Adotar
-              </Button>
             </Box>
           ) : (
             <Box sx={{ height: 40 }} />

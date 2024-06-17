@@ -44,6 +44,9 @@ export default function AnimalCard(props: Animal) {
         },
         body: JSON.stringify({ available: false }),
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       console.error("Erro ao adotar:", error);
     }
